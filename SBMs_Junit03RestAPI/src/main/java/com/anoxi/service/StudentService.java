@@ -7,8 +7,6 @@ import com.anoxi.mapper.StudentMapper;
 import com.anoxi.repo.StudentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,5 +39,13 @@ public class StudentService {
                 .stream()
                 .map(StudentMapper::toStudentResponsedto)
                 .collect(Collectors.toList());
+    }
+
+    //find student by Id
+    public StudentResponseDto findStudentById(Integer id){
+
+        return studentRepo.findById(id)
+                .map(StudentMapper::toStudentResponsedto)
+                .orElse(null);
     }
 }

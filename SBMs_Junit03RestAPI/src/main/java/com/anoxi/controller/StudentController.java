@@ -57,6 +57,27 @@ public class StudentController {
         response.setMsg("Get All students");
         response.setData(allStudent);
 
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getStudentById(@RequestParam("id") Integer id){
+
+        ApiResponse<StudentResponseDto> response = new ApiResponse<>();
+
+        StudentResponseDto studentById = service.findStudentById(id);
+
+        if (studentById.getId() == null){
+            response.setStatus(500);
+            response.setMsg("Failed to get Student");
+            response.setData(null);
+
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.setStatus(200);
+        response.setMsg("Successfully retrieve Student details");
+        response.setData(studentById);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

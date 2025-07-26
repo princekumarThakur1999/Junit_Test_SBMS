@@ -6,6 +6,7 @@ import com.anoxi.entity.School;
 import com.anoxi.entity.Student;
 import com.anoxi.mapper.StudentMapper;
 import com.anoxi.repo.StudentRepo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,5 +109,37 @@ class StudentServiceTest {
 
         //verify
         Mockito.verify(studentRepo, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    public void should_return_student_by_id(){
+
+        //Given
+        Integer studentId = 01;
+        Student student = new Student(
+                01,
+                "Prince kumar",
+                "pyushthakur1999@gmail.com",
+                "Hyd",
+                new School(101, "Marthoma Memorial School"));
+
+        StudentResponseDto studentResponseDto = new StudentResponseDto(101,"Prince kumar","Marthoma Memorial School");
+
+        //Mock to call
+        Mockito.when(studentRepo.findById(studentId))
+                .thenReturn(Optional.of(student));
+        Mockito.mockStatic(StudentMapper.class)
+                .when(() -> StudentMapper.toStudentResponsedto(student))
+                .thenReturn(studentResponseDto);
+
+        //when
+        StudentResponseDto studentById = studentService.findStudentById(studentId);
+
+        //Then
+        assertEquals(studentResponseDto.getName(), studentById.getName());
+        assertEquals(studentResponseDto.getSchoolName(), studentById.getSchoolName());
+
+        //verify
+        Mockito.verify(studentRepo, Mockito.times(1)).findById(studentId);
     }
 }
