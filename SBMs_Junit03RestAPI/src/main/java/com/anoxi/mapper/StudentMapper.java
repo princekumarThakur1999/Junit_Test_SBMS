@@ -2,6 +2,7 @@ package com.anoxi.mapper;
 
 import com.anoxi.dto.StudentDto;
 import com.anoxi.dto.StudentResponseDto;
+import com.anoxi.dto.SubjectMarks;
 import com.anoxi.entity.School;
 import com.anoxi.entity.Student;
 import org.springframework.stereotype.Component;
@@ -45,5 +46,13 @@ public class StudentMapper {
             studentResponseDto.setSchoolName(student.getSchool().getSchoolName());
         }
         return studentResponseDto;
+    }
+
+    //Unit Testing - for private method
+    private double getPercentage(SubjectMarks subjectMarks){
+
+        int totalMarks = subjectMarks.getEnglish() + subjectMarks.getHindi() + subjectMarks.getMaths() + subjectMarks.getScience();
+        double percentage = (totalMarks/400.0) * 100;
+        return percentage;
     }
 }

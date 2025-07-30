@@ -2,6 +2,7 @@ package com.anoxi.service;
 
 import com.anoxi.dto.StudentDto;
 import com.anoxi.dto.StudentResponseDto;
+import com.anoxi.dto.SubjectMarks;
 import com.anoxi.entity.School;
 import com.anoxi.entity.Student;
 import com.anoxi.mapper.StudentMapper;
@@ -13,13 +14,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class StudentServiceTest {
 
     @InjectMocks
@@ -142,4 +146,5 @@ class StudentServiceTest {
         //verify
         Mockito.verify(studentRepo, Mockito.times(1)).findById(studentId);
     }
+
 }
